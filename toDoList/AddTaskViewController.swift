@@ -27,6 +27,7 @@ class AddTaskViewController: UIViewController {
         
         //add the task to the array
         previousVC.taskList.append(task)
+      
         //update the page when done 
         previousVC.tableView.reloadData()
         //move back to task list when done 

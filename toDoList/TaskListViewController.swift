@@ -43,11 +43,13 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
         
         return cell
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = taskList[indexPath.row]
+        performSegue(withIdentifier: "selectTaskSegue", sender: task)
     }
+    
+   
     //get list of tasks already added to populate table
     func makeTask() -> [Task] {
         let task1 = Task()
@@ -70,10 +72,20 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextVC = segue.destination as! AddTaskViewController
+        if (segue.identifier ==
+            "addTaskSegue"){        let nextVC = segue.destination as! AddTaskViewController
         nextVC.previousVC = self
-        
+        }
+        if(segue.identifier ==
+            "selectTaskSegue"){        let nextVC = segue.destination as! UpdateTaskViewController
+            nextVC.task = sender as! Task
+            //nextVC.previousVC = self
+        }
     }
-
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }
 
