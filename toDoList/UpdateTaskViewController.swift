@@ -11,6 +11,7 @@ import UIKit
 class UpdateTaskViewController: UIViewController {
     
     var task = Task()
+    var previousVC = TaskListViewController()
     @IBOutlet weak var taskLabel: UILabel!
     
     
@@ -26,6 +27,12 @@ class UpdateTaskViewController: UIViewController {
     }
 
     @IBAction func completeButtonTapped(_ sender: Any) {
+        //remove item
+        previousVC.taskList.remove(at: previousVC.selectedIndex)
+        //update the page when done
+        previousVC.tableView.reloadData()
+        //move back to task list when done
+        navigationController!.popViewController(animated: true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -13,6 +13,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addTaskButton: UIBarButtonItem!
     var taskList : [Task] = []
+    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
         let task = taskList[indexPath.row]
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
     }
@@ -79,7 +81,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
         if(segue.identifier ==
             "selectTaskSegue"){        let nextVC = segue.destination as! UpdateTaskViewController
             nextVC.task = sender as! Task
-            //nextVC.previousVC = self
+            nextVC.previousVC = self
         }
     }
     
