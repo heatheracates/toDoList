@@ -69,6 +69,11 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
         performSegue(withIdentifier: "addTaskSegue", sender: nil)
         
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextVC = segue.destination as! AddTaskViewController
+        nextVC.previousVC = self
+        
+    }
 
 }
 
