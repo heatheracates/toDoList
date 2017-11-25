@@ -49,6 +49,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
         selectedIndex = indexPath.row
         let task = taskList[indexPath.row]
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
    
@@ -82,6 +83,8 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
             "selectTaskSegue"){        let nextVC = segue.destination as! UpdateTaskViewController
             nextVC.task = sender as! Task
             nextVC.previousVC = self
+            
+            
         }
     }
     
