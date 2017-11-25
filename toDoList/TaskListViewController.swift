@@ -67,6 +67,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
 
     @IBAction func addTaskTapped(_ sender: Any) {
         performSegue(withIdentifier: "addTaskSegue", sender: nil)
+        
     }
 
 }

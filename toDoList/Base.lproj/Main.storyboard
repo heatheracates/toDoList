@@ -53,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="753" y="697"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Task View Controller-->
         <scene sceneID="Ske-Hf-Ay5">
             <objects>
-                <viewController id="GPy-aZ-1B3" sceneMemberID="viewController">
+                <viewController id="GPy-aZ-1B3" customClass="AddTaskViewController" customModule="toDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Z1t-70-buk"/>
                         <viewControllerLayoutGuide type="bottom" id="t6O-Rz-f2M"/>
@@ -98,6 +98,9 @@
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="addButtonTapped:" destination="GPy-aZ-1B3" eventType="touchUpInside" id="uGe-lZ-Y2Z"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -120,6 +123,10 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="isImportantSwitch" destination="H9u-Nu-Yd4" id="rdJ-RR-NYx"/>
+                        <outlet property="taskNameTextFeild" destination="8BZ-Rg-76H" id="nEa-Ks-onf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hKz-pn-jRY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
