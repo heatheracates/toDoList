@@ -13,15 +13,18 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addTaskButton: UIBarButtonItem!
     var taskList : [Task] = []
-    var selectedIndex = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        taskList = makeTask()
-        
+
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks()
+        tableView.reloadData()
     }
     
     //how many rows
@@ -36,58 +39,45 @@ class TaskListViewController: UIViewController, UITableViewDelegate,UITableViewD
         let task = taskList[indexPath.row]
         
         if (task.isImportant){
-            cell.textLabel?.text = "❗️\(task.name)"
+            cell.textLabel?.text = "❗️\(task.name!)"
         }
         else{
-             cell.textLabel?.text = "• \(task.name)"
+             cell.textLabel?.text = "• \(task.name!)"
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
+
         let task = taskList[indexPath.row]
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-   
-    //get list of tasks already added to populate table
-    func makeTask() -> [Task] {
-        let task1 = Task()
-        task1.name = "buy bread"
-        task1.isImportant = false
-        
-        let task2 = Task()
-        task2.name = "go to DMV"
-        task2.isImportant = true
-        
-        let task3 = Task()
-        task3.name = "clean desk"
-        task3.isImportant = false
-        
-        return [task1, task2, task3]
-    }
 
     @IBAction func addTaskTapped(_ sender: Any) {
         performSegue(withIdentifier: "addTaskSegue", sender: nil)
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier ==
-            "addTaskSegue"){        let nextVC = segue.destination as! AddTaskViewController
-        nextVC.previousVC = self
-        }
-        if(segue.identifier ==
-            "selectTaskSegue"){        let nextVC = segue.destination as! UpdateTaskViewController
-            nextVC.task = sender as! Task
-            nextVC.previousVC = self
-            
+  
+        if(segue.identifier == "selectTaskSegue"){
+            let nextVC = segue.destination as! UpdateTaskViewController
+            nextVC.task = sender as? Task
             
         }
     }
     
+    func getTasks(){
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        do{
+            taskList = try context.fetch(Task.fetchRequest()) as! [Task]
+        }
+        catch {
+            print("error getting tasks")
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

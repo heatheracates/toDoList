@@ -10,28 +10,29 @@ import UIKit
 
 class UpdateTaskViewController: UIViewController {
     
-    var task = Task()
-    var previousVC = TaskListViewController()
+    var task : Task? = nil
+
     @IBOutlet weak var taskLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (task.isImportant){
-        taskLabel.text = "❗️\(task.name)"
+        if (task!.isImportant){
+        taskLabel.text = "❗️\(task!.name!)"
         }
         else{
-            taskLabel.text = task.name
+            taskLabel.text = task!.name!
         }
         
     }
 
     @IBAction func completeButtonTapped(_ sender: Any) {
-        //remove item
-        previousVC.taskList.remove(at: previousVC.selectedIndex)
-        //update the page when done
-        previousVC.tableView.reloadData()
-        //move back to task list when done
+   
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.delete(task!)
+        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
         navigationController!.popViewController(animated: true)
     }
     override func didReceiveMemoryWarning() {
